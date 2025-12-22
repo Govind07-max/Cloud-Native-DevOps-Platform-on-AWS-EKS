@@ -15,7 +15,7 @@ jobs:
       - run: go mod download
       - uses: golangci/golangci-lint-action@v3
         with:
-          version: v1.50.1
+          version: v1.55.2
           args: ./...
       - run: go test -v ./...
       - run: go build -o app .
