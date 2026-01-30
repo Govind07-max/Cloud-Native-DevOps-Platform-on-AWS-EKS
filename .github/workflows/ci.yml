@@ -94,7 +94,7 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/go-web-app:${{ github.run_id }}
+            ${{ secrets.DOCKER_USERNAME }}/go-web-app:${{ github.sha }}
             ${{ secrets.DOCKER_USERNAME }}/go-web-app:latest
 
 
@@ -104,7 +104,9 @@ jobs:
   # ------------------------
   update-newtag-in-helm-chart:
     runs-on: ubuntu-latest
-    needs: push
+    needs:
+      - build
+      - code-quality
     steps:
       - name: Checkout repository with write token
         uses: actions/checkout@v4
@@ -113,7 +115,7 @@ jobs:
 
       - name: Update tag in Helm chart
         run: |
-          sed -i 's/tag: .*/tag: '"${{ github.run_id }}"'/' go-web-app-chart/values.yaml
+          sed -i "s/tag: .*/tag: \"${GITHUB_SHA}\"/" go-web-app-chart/values.yaml
 
       - name: Commit & push Helm update
         run: |
