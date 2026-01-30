@@ -94,8 +94,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/go-web-app:${{ github.run_id }}
-            ${{ secrets.DOCKERHUB_USERNAME }}/go-web-app:latest
+            ${{ secrets.DOCKER_USERNAME }}/go-web-app:${{ github.run_id }}
+            ${{ secrets.DOCKER_USERNAME }}/go-web-app:latest
 
 
 
